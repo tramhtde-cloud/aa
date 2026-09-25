@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOTES</title>
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <style>
+        body { margin: 0; background: #fdf6f0; font-family: sans-serif; color: #4a4a4a; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+        header { text-align: center; margin-bottom: 30px; }
+        header h1 { color: #ff8a8a; }
+        .note-container { width: 100%; max-width: 500px; }
+        .note-card { background: white; border-radius: 12px; padding: 15px; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border-left: 5px solid #ff8a8a; }
+        .note-date { font-size: 0.8rem; color: #999; }
+        .note-content { margin-top: 10px; line-height: 1.5; white-space: pre-line; }
+        .note-mood { display: inline-block; margin-top: 10px; font-size: 0.8rem; background: #fff0f0; padding: 3px 10px; border-radius: 10px; color: #ff8a8a; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Notes của em</h1>
+        <p>Lần sau có gì phải nói với anh nghe chưa...</p>
+    </header>
+    <div class="note-container" id="note-list">Đang tải lời nhắn...</div>
+
+    <script>
+        async function loadNotes() {
+            try {
+                const response = await fetch('data.json');
+                const data = await response.json();
+                const list = document.getElementById('note-list');
+                list.innerHTML = '';
+                if (!data.notes) return list.innerHTML = "Chưa có lời nhắn nào.";
+                data.notes.reverse().forEach(note => {
+                    list.innerHTML += `
+                        <div class="note-card">
+                            <div class="note-date">${note.date}</div>
+                            <div class="note-content">${note.content}</div>
+                            <div class="note-mood">${note.mood}</div>
+                        </div>`;
+                });
+            } catch (e) { document.getElementById('note-list').innerHTML = "Chưa có lời nhắn nào."; }
+        }
+        loadNotes();
+    </script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+backend:
+  name: git-gateway
+  repo: tramhtde-cloud/aa
+  branch: main
+
+media_folder: "images"
+public_folder: "/images"
+
+collections:
+  - name: "diary"
+    label: "Nhật ký của em"
+    files:
+      - name: "all_notes"
+        label: "Danh sách lời nhắn"
+        file: "data.json"
+        fields:
+          - label: "Các bài viết"
+            name: "notes"
+            widget: "list"
+            fields:
+              - {label: "Ngày viết", name: "date", widget: "string"}
+              - {label: "Tâm trạng", name: "mood", widget: "select", options: ["Vui 😊", "Buồn ☁️", "Nhớ anh ❤️", "Giận 😤"]}
+              - {label: "Nội dung", name: "content", widget: "text"}
